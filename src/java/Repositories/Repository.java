@@ -60,7 +60,7 @@ public class Repository implements IRepository {
     public void SaveArticle(ARTICLE article) {
         Before();
         
-        Serializable i = session.save(article);
+        session.save(article);
         session.flush();
         
         After();

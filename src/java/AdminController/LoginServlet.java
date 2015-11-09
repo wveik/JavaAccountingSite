@@ -3,15 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package AdminController;
 
-import Factories.DBFactory;
-import Interface.IRepository;
-import Models.ARTICLE;
 import java.io.IOException;
-import java.util.List;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author kataev2
  */
-@WebServlet(name = "IndexServlet", urlPatterns = {"/index.jsp"})
-public class IndexServlet extends HttpServlet {
+@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
+public class LoginServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,16 +31,6 @@ public class IndexServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        IRepository _repository = DBFactory.GetDBRepository();
-        List<ARTICLE> list = _repository.getAllArticles();
-        
-        String url="/view/index/index.jsp";
-        
-        ServletContext sc = getServletContext();
-        RequestDispatcher rd = sc.getRequestDispatcher(url);
-
-        request.setAttribute("articles", list);
-        rd.forward(request, response);
         
     }
 

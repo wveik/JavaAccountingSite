@@ -26,7 +26,10 @@ public class ARTICLE implements Serializable {
     private int AR_KEY;
     
     @Column(nullable=false)
-    private String AR_NAME;
+    private String AR_NAME; 
+    
+    @Column(nullable=false)
+    private String AR_TEXT;
     
     @Column(nullable=false)
     private String AR_CREATE_DATETIME;
@@ -55,6 +58,15 @@ public class ARTICLE implements Serializable {
     public void setAR_NAME(String AR_NAME) {
         this.AR_NAME = AR_NAME;
     }
+    
+
+    public String getAR_TEXT() {
+        return AR_TEXT;
+    }
+
+    public void setAR_TEXT(String AR_TEXT) {
+        this.AR_TEXT = AR_TEXT;
+    }  
 
     public String getAR_CREATE_DATETIME() {
         return AR_CREATE_DATETIME;

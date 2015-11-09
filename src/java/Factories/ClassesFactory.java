@@ -21,6 +21,7 @@ public class ClassesFactory {
         try {
             result.setAR_KEY(Integer.parseInt(request.getParameter("AR_KEY")));
             result.setAR_NAME(request.getParameter("AR_NAME"));
+            result.setAR_TEXT(request.getParameter("AR_TEXT"));
             result.setAR_CREATE_DATETIME(SimpleHelper.getToDay());
             result.setAR_ORDERBY(Integer.parseInt(request.getParameter("AR_ORDERBY")));
             

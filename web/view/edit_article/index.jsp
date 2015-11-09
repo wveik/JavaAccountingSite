@@ -33,6 +33,14 @@
                         <input name="AR_NAME" value="${article.AR_NAME}" />
                     </td>
                 </tr>
+                 <tr>
+                    <td>
+                        Статья
+                    </td>
+                    <td>
+                        <input name="AR_TEXT" value="${article.AR_TEXT}" />
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         Сортировка
