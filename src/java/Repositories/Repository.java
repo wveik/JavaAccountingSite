@@ -7,6 +7,7 @@ package Repositories;
 
 import Interface.IRepository;
 import Models.ARTICLE;
+import java.io.Serializable;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -56,11 +57,13 @@ public class Repository implements IRepository {
     }
 
     @Override
-    public void test() {
+    public void SaveArticle(ARTICLE article) {
         Before();
         
+        Serializable i = session.save(article);
+        session.flush();
         
         After();
     }
-    
+
 }

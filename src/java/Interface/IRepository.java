@@ -16,6 +16,5 @@ public interface IRepository {
     
     List<ARTICLE> getAllArticles();
     
-    
-    void test();
+    void SaveArticle(ARTICLE article);
 }

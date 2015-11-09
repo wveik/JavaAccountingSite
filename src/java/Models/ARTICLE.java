@@ -20,6 +20,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "ARTICLE")
 public class ARTICLE implements Serializable {
+
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int AR_KEY;
@@ -79,5 +80,8 @@ public class ARTICLE implements Serializable {
         this.AR_HIDE = AR_HIDE;
     }
     
+    public ARTICLE(int AR_KEY) {
+        this.AR_KEY = AR_KEY;
+    }
 
 }

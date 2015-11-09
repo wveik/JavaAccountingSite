@@ -5,11 +5,12 @@
  */
 package Controller;
 
+import Factories.ClassesFactory;
 import Factories.DBFactory;
+import Helpers.SimpleHelper;
 import Interface.IRepository;
 import Models.ARTICLE;
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -22,8 +23,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author kataev2
  */
-@WebServlet(name = "IndexServlet", urlPatterns = {"/"})
-public class IndexServlet extends HttpServlet {
+@WebServlet(name = "EditArticleServlet", urlPatterns = {"/edit/article"})
+public class EditArticleServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,17 +38,16 @@ public class IndexServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        IRepository _repository = DBFactory.GetDBRepository();
-        List<ARTICLE> list = _repository.getAllArticles();
+        String url="/view/edit_article/index.jsp";
         
-        String url="/view/index/index.jsp";
+        ARTICLE article = new ARTICLE(-1);        
+        
+        request.setAttribute("article", article);
         
         ServletContext sc = getServletContext();
-        RequestDispatcher rd = sc.getRequestDispatcher(url);
+        RequestDispatcher rd = sc.getRequestDispatcher(url);        
 
-        request.setAttribute("articles", list);
         rd.forward(request, response);
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -76,7 +76,16 @@ public class IndexServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        request.setCharacterEncoding("UTF-8");
+        ARTICLE result = ClassesFactory.getArticle(request);
+        
+        IRepository _repository = DBFactory.GetDBRepository();
+        _repository.SaveArticle(result);
+        
+        String url=SimpleHelper.getRootURL(request);
+        
+        response.sendRedirect(response.encodeRedirectURL(url));
     }
 
     /**
