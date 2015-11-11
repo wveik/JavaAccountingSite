@@ -17,4 +17,6 @@ public interface IRepository {
     List<ARTICLE> getAllArticles();
     
     void SaveArticle(ARTICLE article);
+
+    public Boolean IsAdmin(String login, String password);
 }

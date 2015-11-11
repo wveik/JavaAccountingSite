@@ -5,10 +5,13 @@
  */
 package Helpers;
 
+import java.io.IOException;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -44,6 +47,28 @@ public class SimpleHelper {
           request.getContextPath();
         
         return baseUrl;
+    }
+
+    public static String getLoginURL(HttpServletRequest request) {
+        String url = getRootURL(request);
+        
+        url += "/admin";
+        
+        return url;
+    }
+
+    public static String getAdminPanelURL(HttpServletRequest request) {
+        String url = getRootURL(request);
+        
+        url += "/admin/panel";
+        
+        return url;
+    }
+    
+    public static Boolean IsAdmin(HttpSession session) {
+        Integer isAdmin = (Integer)session.getAttribute("admin");        
+        
+        return (isAdmin != null && isAdmin == 1);
     }
     
 }

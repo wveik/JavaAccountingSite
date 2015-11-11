@@ -15,5 +15,6 @@
     
     
     <mapping class="Models.ARTICLE"/>
+    <mapping class="Models.USER"/>
   </session-factory>
 </hibernate-configuration>

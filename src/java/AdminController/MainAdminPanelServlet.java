@@ -5,25 +5,21 @@
  */
 package AdminController;
 
-import Factories.DBFactory;
 import Helpers.SimpleHelper;
-import Interface.IRepository;
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author kataev2
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/admin"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "MainAdminPanelServlet", urlPatterns = {"/admin/panel"})
+public class MainAdminPanelServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,14 +33,27 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        //SimpleHelper.checkIsAdmin(request.getSession(), request, response);
+        if(SimpleHelper.IsAdmin(request.getSession())){
+            response.sendRedirect(response.encodeRedirectURL(SimpleHelper.getLoginURL(request)));
+        }else {
         
-        String url="/view/admin/login.jsp";
-        
-        ServletContext sc = getServletContext();
-        RequestDispatcher rd = sc.getRequestDispatcher(url);
-
-        rd.forward(request, response);
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            try {
+                /* TODO output your page here. You may use following sample code. */
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Servlet MainAdminPanelServlet</title>");            
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<h1>Servlet MainAdminPanelServlet at " + request.getContextPath() + "</h1>");
+                out.println("</body>");
+                out.println("</html>");
+            } finally {
+                out.close();
+            }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -73,26 +82,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        HttpSession session = request.getSession();
-        
-        IRepository _repository = DBFactory.GetDBRepository();
-        
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
-        
-        Boolean flag = _repository.IsAdmin(login, password);
-        
-        String url = null;
-        
-        if(flag) {
-            url=SimpleHelper.getAdminPanelURL(request);
-            session.setAttribute("admin", 1);
-            response.sendRedirect(response.encodeRedirectURL(url));
-        }else {
-            request.setAttribute("error", "Вы ошиблись с логином или паролем");
-            processRequest(request, response);
-        }
+        processRequest(request, response);
     }
 
     /**

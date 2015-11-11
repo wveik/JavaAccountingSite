@@ -7,8 +7,9 @@ package Repositories;
 
 import Interface.IRepository;
 import Models.ARTICLE;
-import java.io.Serializable;
+import Models.USER;
 import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -64,6 +65,30 @@ public class Repository implements IRepository {
         session.flush();
         
         After();
+    }
+
+    @Override
+    public Boolean IsAdmin(String login, String password) {
+        
+        Before();
+        
+        Query query = session.createQuery("from USER as u where 1=1" 
+                + " and u.US_NAME = ?"
+                + " and u.US_PASSWORD = ?"   
+                + " and u.US_ADMIN = ?"
+                + " and u.US_HIDE = ?"
+        )
+                .setString(0, login)
+                .setString(1, password)
+                .setInteger(2, 1)
+                .setInteger(3, 0)
+        ;
+
+        List<USER> list = query.list();
+        
+        After();
+        
+        return list.size() > 0;
     }
 
 }
